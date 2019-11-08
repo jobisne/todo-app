@@ -13,6 +13,7 @@ export class Todoitem extends Component {
   };
 
   render() {
+   
     const { id, title } = this.props.todo;
     return (
       <div style={this.getStyle()}>
@@ -25,6 +26,7 @@ export class Todoitem extends Component {
           />
           {'   '}
           {title}
+          <button onClick={() => {this.props.deleteTodo(id)}} style={btnStyle}>X</button>
         </p>
       </div>
     );
@@ -34,5 +36,15 @@ export class Todoitem extends Component {
 Todoitem.PropTypes = {
   todo: PropTypes.object.isRequired
 };
+const btnStyle = {
+  background: '#ff0000',
+  color: '#fff',
+  padding: '5px 10px',
+  border: 'none',
+  borderRadius: '50%',
+  cursor: 'pointer',
+  float: 'right'
+}
+
 
 export default Todoitem;

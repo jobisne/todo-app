@@ -14,8 +14,8 @@ class Todos extends Component {
 }
 
 
-// eslint-disable-next-line react/no-typos
-Todos.PropTypes = {
+// PropTypes
+Todos.propTypes = {
   todos: PropTypes.array.isRequired
 }
 

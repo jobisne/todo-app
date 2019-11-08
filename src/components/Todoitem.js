@@ -33,7 +33,7 @@ export class Todoitem extends Component {
   }
 }
 //PropTypes
-Todoitem.PropTypes = {
+Todoitem.propTypes = {
   todo: PropTypes.object.isRequired
 };
 const btnStyle = {

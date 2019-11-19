@@ -4,6 +4,8 @@ import Todos from './components/Todos';
 import AddTodo from './components/AddTodo';
 import Header from './components/layout/Header';
 import About from './components/pages/About';
+import Nav from './components/layout/Nav';
+import Landing from './components/pages/Landing';
 
 import uuid from 'uuid';
 import './App.css';
@@ -62,12 +64,14 @@ class App extends Component {
     return (
       <Router>
         <div className="App">
+          <Nav />
+          <Route path="/" component={Landing} />
           <div className="container">
-            <Header />
             <Route exact
-              path="/"
+              path="/myapp"
               render={props => (
                 <React.Fragment>
+                   <Header />
                   <Todos
                     todos={this.state.todos}
                     markComplete={this.markComplete}

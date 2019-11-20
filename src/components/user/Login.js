@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import { login } from './UserFunction';
 
-export class Register extends Component {
+
+export class Login extends Component {
   state = {
-    username: '',
     email: '',
     password: ''
   };
@@ -13,16 +13,18 @@ export class Register extends Component {
   onSubmit = (e) => {
     e.preventDefault();
     const logUser = {
-      username: this.state.username,
       email: this.state.email,
       password: this.state.password
     }
 
-    const loginUser = login(logUser);
-    if (loginUser) {
-      this.props.history.push(`/myapp`);                                                                            
-    }    
-    this.props.addUser(userReg);
+     const yes = login(logUser);
+ console.log(yes)
+    if (yes) {
+      this.props.history.push(`/myapp`);                                   
+    } else {
+      this.props.history.push(`/`);
+    }   
+    // this.props.addUser(userReg);
     this.setState({username: ''});
     this.setState({email: ''});
     this.setState({password: ''});
@@ -31,15 +33,10 @@ export class Register extends Component {
 
   render() {
     return (
+     
       <div>
         <form onSubmit={this.onSubmit}>
-          <input
-            type="text"
-            name="username"
-            onChange={this.onChange}
-            value={this.state.username}
-            placeholder="User Name"
-          />
+          
           <input
             type="text"
             name="email"
@@ -65,4 +62,5 @@ export class Register extends Component {
   }
 }
 
-export default Register;
+
+export default Login;

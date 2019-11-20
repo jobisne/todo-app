@@ -6,6 +6,9 @@ import Header from './components/layout/Header';
 import About from './components/pages/About';
 import Nav from './components/layout/Nav';
 import Landing from './components/pages/Landing';
+import Register from './components/user/Register';
+import Login from './components/user/Login';
+
 
 import uuid from 'uuid';
 import './App.css';
@@ -65,10 +68,10 @@ class App extends Component {
       <Router>
         <div className="App">
           <Nav />
-          <Route path="/" component={Landing} />
+          <Route path="/" strict component={Landing} />
           <div className="container">
             <Route exact
-              path="/myapp"
+              path="/myapp" strict
               render={props => (
                 <React.Fragment>
                    <Header />
@@ -82,6 +85,9 @@ class App extends Component {
               )}
             />
             <Route path='/about' component={About} />
+            <Route path='/register' component={Register} />
+            <Route path='/login' component={Login} />
+
           </div>
         </div>
       </Router>

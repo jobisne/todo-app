@@ -19,7 +19,7 @@ export class Register extends Component {
     }
     const newUser = register(userReg);
     console.log(newUser);
-    this.props.addUser(userReg);
+    // this.props.addUser(userReg);
     this.setState({username: ''});
     this.setState({email: ''});
     this.setState({password: ''});

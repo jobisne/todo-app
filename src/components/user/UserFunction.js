@@ -1,4 +1,4 @@
-import  React from 'react';
+
 import userData from '../userData';
 
 
@@ -13,11 +13,14 @@ export const register = (newUser) => {
 }
 
 export const login = (loginUser) => {
-  userData.map((user) => {
-    if (user.email === loginUser.email ) {
-      return true
-    } else {
-      return false
+
+  userData.forEach((user) => {
+    if (user.email === loginUser.email && user.password === loginUser.password) {
+      console.log('yes')
+    //  status = true
+    return true
     }
-  })
+    
+  });
+  
 }

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { login } from './UserFunction';
+import { loginFun } from './UserFunction';
 
 
 export class Login extends Component {
@@ -16,21 +16,19 @@ export class Login extends Component {
       email: this.state.email,
       password: this.state.password
     }
-
-     const yes = login(logUser);
- console.log(yes)
-    if (yes) {
-      this.props.history.push(`/myapp`);                                   
+    const yes = loginFun(logUser);
+    this.props.checkUser(yes) 
+    if(yes) {
+      this.props.history.push(`/myapp`); 
     } else {
-      this.props.history.push(`/`);
-    }   
-    // this.props.addUser(userReg);
+      this.props.history.push(`/login`); 
+    }
     this.setState({username: ''});
     this.setState({email: ''});
     this.setState({password: ''});
 
   }
-
+  
   render() {
     return (
      
@@ -54,8 +52,8 @@ export class Login extends Component {
           <input
             type="submit"
             value="Submit"
-            
           />
+           
         </form>
       </div>
     );

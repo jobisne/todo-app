@@ -10,17 +10,18 @@ export const register = (newUser) => {
   }
   userData.push(user);
   return userData;
-}
-
-export const login = (loginUser) => {
-
-  userData.forEach((user) => {
-    if (user.email === loginUser.email && user.password === loginUser.password) {
-      console.log('yes')
-    //  status = true
-    return true
+} 
+export const loginFun = (loginUser) => {
+  let status;
+   userData.forEach((user) => {
+    if(user.email === loginUser.email  && user.password === loginUser.password) {
+     status = true
+    } else {
+      status = false
     }
+  })
+ 
     
-  });
-  
+ return status
 }
+

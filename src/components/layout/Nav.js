@@ -2,10 +2,7 @@ import React, { Component } from 'react';
 import {Link, withRouter } from 'react-router-dom';
 
 class Landing extends Component{
-  state = {
-    
-    isLoggedIn: true
-  };
+ 
   render(){
     const loginRegLink = (
       <div>
@@ -19,7 +16,8 @@ class Landing extends Component{
     )
     return(
       <div style={headerStyle}>
-        {!this.state.isLoggedIn ? userLink : loginRegLink}
+        {console.log(this.props.logged)}
+        {!this.props.logged ? userLink : loginRegLink}
       </div>
     )
   }

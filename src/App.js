@@ -31,7 +31,8 @@ class App extends Component {
         title: 'Go to mosque',
         completed: false
       }
-    ]
+    ],
+    isLoggedIn: true
   };
   // Toggle Complete
   markComplete = id => {
@@ -63,12 +64,28 @@ class App extends Component {
     // console.log(title);
   };
 
+  checkUser = (user) => {
+    console.log(user);
+    this.setState({ isLoggedIn: false });
+    
+    
+  }
+
   render() {
     return (
       <Router>
         <div className="App">
-          <Nav />
-          <Route path="/" strict component={Landing} />
+         
+          
+          <Route exact path="/" strict render={props => (
+            <React.Fragment>
+              <Nav logged={this.state.isLoggedIn}/>
+              <Landing  />
+            </React.Fragment>
+            
+          )} />
+          
+         
           <div className="container">
             <Route exact
               path="/myapp" strict
@@ -86,7 +103,13 @@ class App extends Component {
             />
             <Route path='/about' component={About} />
             <Route path='/register' component={Register} />
-            <Route path='/login' component={Login} />
+            <Route path='/login'  render={props =>(
+              <React.Fragment>
+                <Header />
+                <Login  {...props} checkUser={this.checkUser}/>
+              </React.Fragment>
+              
+            )} />
 
           </div>
         </div>

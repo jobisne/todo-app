@@ -4,10 +4,7 @@ function Landing() {
   return (
     <div>
 
-    <h1>
-      About
-    </h1>
-    <p style={{ textAlign: 'center'}}>Welcome, Please make yourself confortable</p>
+    <p style={{ textAlign: 'center', marginTop: '25%'}}>Welcome, Please make yourself confortable</p>
    
     </div>
   )

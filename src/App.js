@@ -2,32 +2,35 @@ import React, { Component } from 'react';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 import Todos from './components/Todos';
 import AddTodo from './components/AddTodo';
-import Header from './components/layout/Header';
+import Alert from './components/Alert';
+// import Header from './components/layout/Header';
+import Nav from './components/layout/Nav';
 import About from './components/pages/About';
+import Register from './components/user/Register';
+import Login from './components/user/Login';
+import userData from './userData';
 
-import uuid from 'uuid';
+
+import axios from 'axios';
+// import uuid from 'uuid';
 import './App.css';
+import Landing from './components/pages/Landing';
 
 class App extends Component {
+ 
   state = {
-    todos: [
-      {
-        id: uuid.v4(),
-        title: 'Report to sauban',
-        completed: false
-      },
-      {
-        id: uuid.v4(),
-        title: 'Night supplication',
-        completed: false
-      },
-      {
-        id: uuid.v4(),
-        title: 'Go to mosque',
-        completed: false
-      }
-    ]
+    todos: [],
+    isLoggedIn: false,
+    alert: null,
+    isLoading: false
   };
+  componentDidMount() {
+    this.setState({ isLoading: true})
+    axios
+      .get('http://jsonplaceholder.typicode.com/todos?_limit=10')
+      .then(res => this.setState({ todos: res.data, isLoading: false }));
+  }
+
   // Toggle Complete
   markComplete = id => {
     this.setState({
@@ -42,42 +45,96 @@ class App extends Component {
 
   //Delete Todo
   deleteTodo = id => {
-    this.setState({
-      todos: [...this.state.todos.filter(todo => todo.id !== id)]
-    });
+    axios.delete(`http://jsonplaceholder.typicode.com/todos/${id}`).then(res =>
+      this.setState({
+        todos: [...this.state.todos.filter(todo => todo.id !== id)]
+      })
+    );
+
     // console.log('tes', id)
   };
+
   //Add Todo
   addTodo = title => {
-    const newTodo = {
-      id: uuid.v4(),
-      title,
-      completed: false
-    };
-    this.setState({ todos: [...this.state.todos, newTodo] });
+    axios
+      .post('http://jsonplaceholder.typicode.com/todos', {
+        title,
+        completed: false
+      })
+      .then(res => this.setState({ todos: [...this.state.todos, res.data] }));
+
     // console.log(title);
   };
+  //Add User
+  addUser = user => {
+    userData.push(user);
+    console.log(userData);
+   
+  }
+  //Login User
+  loginUser = userInfo => {
+    let status;
+    this.setState({ isLoggedIn: true });
+    userData.forEach(user => {
+      if(user.email === userInfo.email && user.password === userInfo.password) {
+        // console.log('yes');
+       status = true
+      } 
+    })
+    return status
+  }
+
+  //Alert User
+  alert = (msg, type) => {
+    this.setState({ alert: {msg, type}});
+
+    setTimeout(() => {
+      this.setState({ alert: null });
+    }, 3000);
+  }
 
   render() {
     return (
       <Router>
         <div className="App">
+            <Nav loggedIn={this.state.isLoggedIn}/>
+            <Route exact  path="/" component={Landing} />
           <div className="container">
-            <Header />
-            <Route exact
-              path="/"
+            
+            
+            <Route
+              exact
+              path="/myapp"
               render={props => (
                 <React.Fragment>
+                  
                   <Todos
                     todos={this.state.todos}
                     markComplete={this.markComplete}
                     deleteTodo={this.deleteTodo}
+                    isLoading={this.state.isLoading}
                   />
-                  <AddTodo addTodo={this.addTodo} />
+                  <Alert  alert={this.state.alert}/>
+                  <AddTodo addTodo={this.addTodo} alert={this.alert} />
+                  
                 </React.Fragment>
               )}
             />
-            <Route path='/about' component={About} />
+            <Route path="/about" component={About} />
+            <Route path="/register" render={props => (
+              <React.Fragment>
+                <Register addUser={this.addUser} />
+              </React.Fragment>
+            )} 
+
+            />
+            <Route path="/login" render={props => (
+              <React.Fragment>
+                <Login {...props} loginUser={this.loginUser}/>
+              </React.Fragment>
+            )}
+             />
+
           </div>
         </div>
       </Router>

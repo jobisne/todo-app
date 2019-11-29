@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 export class AddTodo extends Component {
   state = {
@@ -9,8 +10,12 @@ export class AddTodo extends Component {
 
     onSubmit = (e) => {
       e.preventDefault();
-      this.props.addTodo(this.state.title);
-      this.setState({ title: ''});
+      if (this.state.title === '') {
+        this.props.alert('Please enter something', 'light');
+      } else {
+        this.props.addTodo(this.state.title);
+        this.setState({ title: ''});
+      }
     }
 
   render() {
@@ -34,5 +39,9 @@ export class AddTodo extends Component {
     );
   }
 }
+AddTodo.propTypes = {
+  addTodo: PropTypes.func.isRequired,
+  
+};
 
 export default AddTodo;

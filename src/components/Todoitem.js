@@ -1,4 +1,4 @@
-/* eslint-disable react/no-typos */
+  /* eslint-disable react/no-typos */
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
@@ -34,7 +34,9 @@ export class Todoitem extends Component {
 }
 //PropTypes
 Todoitem.propTypes = {
-  todo: PropTypes.object.isRequired
+  todo: PropTypes.object.isRequired,
+  markComplete: PropTypes.func.isRequired,
+  deleteTodo: PropTypes.func.isRequired
 };
 const btnStyle = {
   background: '#ff0000',
